@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>לומדים עברית - אתר ללימוד עברית לעולים חדשים</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap');
+        
+        body {
+            font-family: 'Rubik', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+            direction: rtl;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #4a6da7;
+            padding-bottom: 10px;
+        }
+        
+        h1 {
+            color: #4a6da7;
+            margin-bottom: 10px;
+        }
+        
+        .tab-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            background-color: #e0e0e0;
+            border: none;
+            border-radius: 5px 5px 0 0;
+            margin: 0 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        
+        .tab.active {
+            background-color: #4a6da7;
+            color: white;
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 0 0 10px 10px;
+            min-height: 400px;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .word-card {
+            display: flex;
+            align-items: center;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            margin-bottom: 15px;
+            cursor: pointer;
+        }
+        
+        .word-image {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-left: 15px;
+        }
+        
+        .word-details {
+            flex: 1;
+        }
+        
+        .hebrew-word {
+            font-size: 30px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .russian-translation {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+        
+        .exercise-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .image-question {
+            margin-bottom: 20px;
+        }
+        
+        .image-question img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        
+        input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            width: 200px;
+            text-align: center;
+            direction: rtl;
+        }
+        
+        .check-button {
+            background-color: #4a6da7;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+        }
+        
+        .check-button:hover {
+            background-color: #3a5a8a;
+        }
+        
+        .feedback {
+            margin-top: 10px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .correct {
+            color: green;
+        }
+        
+        .incorrect {
+            color: red;
+        }
+        
+        .multiple-choice {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+        
+        .question-text {
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .option {
+            padding: 10px 20px;
+            background-color: #e0e0e0;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .option:hover {
+            background-color: #d0d0d0;
+        }
+        
+        .option.selected {
+            background-color: #b8d0f7;
+            border-color: #4a6da7;
+        }
+        
+        .sound-button {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 24px;
+            color: #4a6da7;
+            margin-right: 10px;
+        }
+        
+        .letter-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .letter-card {
+            width: 100px;
+            height: 120px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+        }
+        
+        .letter {
+            font-size: 40px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .letter-example {
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        .progress-container {
+            width: 100%;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background-color: #4CAF50;
+            border-radius: 5px;
+            width: 0%;
+            transition: width 0.3s;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>לומדים עברית</h1>
+            <p>אתר ללימוד השפה העברית לעולים חדשים</p>
+        </header>
+        
+        <div class="tab-container">
+            <button class="tab active" onclick="openTab('alphabet')">אותיות</button>
+            <button class="tab" onclick="openTab('words')">מילים</button>
+            <button class="tab" onclick="openTab('sentences')">משפטים</button>
+            <button class="tab" onclick="openTab('exercises')">תרגול</button>
+        </div>
+        
+        <div id="alphabet" class="tab-content active">
+            <h2>האותיות בעברית</h2>
+            <p>לחצו על האותיות כדי לשמוע את הצליל שלהן</p>
+            
+            <div class="letter-container">
+                <!-- אותיות יתווספו ע"י JavaScript -->
+            </div>
+        </div>
+        
+        <div id="words" class="tab-content">
+            <h2>מילים בסיסיות</h2>
+            <p>לחצו על המילים כדי לשמוע את ההגייה</p>
+            
+            <div class="word-list">
+                <!-- כרטיסיות מילים יתווספו ע"י JavaScript -->
+            </div>
+        </div>
+        
+        <div id="sentences" class="tab-content">
+            <h2>משפטים פשוטים</h2>
+            <p>לחצו על המשפטים כדי לשמוע את ההגייה</p>
+            
+            <div class="sentences-list">
+                <!-- משפטים יתווספו ע"י JavaScript -->
+            </div>
+        </div>
+        
+        <div id="exercises" class="tab-content">
+            <h2>תרגילים</h2>
+            
+            <div class="progress-container">
+                <div id="progress-bar" class="progress-bar"></div>
+            </div>
+            <p id="progress-text">שאלה 1 מתוך 5</p>
+            
+            <div class="exercise-container">
+                <div id="exercise-1" class="exercise active">
+                    <div class="image-question">
+                        <h3>מה בתמונה?</h3>
+                        <img src="/api/placeholder/150/150" alt="תמונה לתרגול" id="question-image-1">
+                        <div>
+                            <input type="text" id="answer-input-1" placeholder="הקלידו את התשובה">
+                            <button class="check-button" onclick="checkImageAnswer(1)">בדיקה</button>
+                        </div>
+                        <div id="feedback-1" class="feedback"></div>
+                    </div>
+                </div>
+                
+                <div id="exercise-2" class="exercise" style="display: none;">
+                    <div class="multiple-choice">
+                        <h3>קראו את המשפט וענו על השאלה:</h3>
+                        <p id="question-sentence-2" class="question-text">הַחֲתוּל אוֹכֵל דָּג.</p>
+                        <p id="question-text-2" class="question-text">מה החתול אוכל?</p>
+                        <div id="options-2" class="options">
+                            <div class="option" onclick="selectOption(this, 2, 0)">עוגה</div>
+                            <div class="option" onclick="selectOption(this, 2, 1)">דג</div>
+                            <div class="option" onclick="selectOption(this, 2, 2)">תפוח</div>
+                        </div>
+                        <button class="check-button" onclick="checkMultipleChoice(2)">בדיקה</button>
+                        <div id="feedback-2" class="feedback"></div>
+                    </div>
+                </div>
+                
+                <!-- יותר תרגילים יתווספו ע"י JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // נתונים של מילים ותרגום
+        const wordsData = [
+            { 
+                hebrew: "חָתוּל", 
+                russian: "кот", 
+                image: "cat.jpg", 
+                id: "cat" 
+            },
+            { 
+                hebrew: "כֶּלֶב", 
+                russian: "собака", 
+                image: "dog.jpg", 
+                id: "dog" 
+            },
+            { 
+                hebrew: "בַּיִת", 
+                russian: "дом", 
+                image: "house.jpg", 
+                id: "house" 
+            },
+            { 
+                hebrew: "עֵץ", 
+                russian: "дерево", 
+                image: "tree.jpg", 
+                id: "tree" 
+            },
+            { 
+                hebrew: "פֶּרַח", 
+                russian: "цветок", 
+                image: "flower.jpg", 
+                id: "flower" 
+            },
+            { 
+                hebrew: "יֶלֶד", 
+                russian: "мальчик", 
+                image: "boy.jpg", 
+                id: "boy" 
+            },
+            { 
+                hebrew: "יַלְדָּה", 
+                russian: "девочка", 
+                image: "girl.jpg", 
+                id: "girl" 
+            },
+            { 
+                hebrew: "שֶׁמֶשׁ", 
+                russian: "солнце", 
+                image: "sun.jpg", 
+                id: "sun" 
+            },
+            { 
+                hebrew: "מַיִם", 
+                russian: "вода", 
+                image: "water.jpg", 
+                id: "water" 
+            },
+            { 
+                hebrew: "סֵפֶר", 
+                russian: "книга", 
+                image: "book.jpg", 
+                id: "book" 
+            }
+        ];
+
+        // נתונים של אותיות
+        const lettersData = [
+            { letter: "א", sound: "alef", example: "אָב (אבא)" },
+            { letter: "ב", sound: "bet", example: "בַּיִת (בית)" },
+            { letter: "ג", sound: "gimel", example: "גַּן (גן)" },
+            { letter: "ד", sound: "dalet", example: "דָּג (דג)" },
+            { letter: "ה", sound: "hey", example: "הַר (הר)" },
+            { letter: "ו", sound: "vav", example: "וָרֹד (ורוד)" },
+            { letter: "ז", sound: "zayin", example: "זָהָב (זהב)" },
+            { letter: "ח", sound: "chet", example: "חָתוּל (חתול)" },
+            { letter: "ט", sound: "tet", example: "טוֹב (טוב)" },
+            { letter: "י", sound: "yod", example: "יָד (יד)" },
+            { letter: "כ", sound: "kaf", example: "כֶּלֶב (כלב)" },
+            { letter: "ל", sound: "lamed", example: "לֶחֶם (לחם)" },
+            { letter: "מ", sound: "mem", example: "מַיִם (מים)" },
+            { letter: "נ", sound: "nun", example: "נַעַל (נעל)" },
+            { letter: "ס", sound: "samech", example: "סֵפֶר (ספר)" },
+            { letter: "ע", sound: "ayin", example: "עֵץ (עץ)" },
+            { letter: "פ", sound: "pey", example: "פֶּרַח (פרח)" },
+            { letter: "צ", sound: "tsadi", example: "צִפּוֹר (ציפור)" },
+            { letter: "ק", sound: "kuf", example: "קוֹף (קוף)" },
+            { letter: "ר", sound: "resh", example: "רֶגֶל (רגל)" },
+            { letter: "ש", sound: "shin", example: "שֶׁמֶשׁ (שמש)" },
+            { letter: "ת", sound: "tav", example: "תַּפּוּחַ (תפוח)" }
+        ];
+
+        // נתונים של משפטים
+        const sentencesData = [
+            { 
+                hebrew: "הַחָתוּל אוֹכֵל דָּג.", 
+                russian: "Кот ест рыбу.", 
+                id: "cat-eats-fish" 
+            },
+            { 
+                hebrew: "הַיֶּלֶד קוֹרֵא סֵפֶר.", 
+                russian: "Мальчик читает книгу.", 
+                id: "boy-reads-book" 
+            },
+            { 
+                hebrew: "הַיַּלְדָּה שׁוֹתָה מַיִם.", 
+                russian: "Девочка пьет воду.", 
+                id: "girl-drinks-water" 
+            },
+            { 
+                hebrew: "הַכֶּלֶב רָץ בַּגִּנָּה.", 
+                russian: "Собака бежит в саду.", 
+                id: "dog-runs-garden" 
+            },
+            { 
+                hebrew: "הַשֶּׁמֶשׁ זוֹרַחַת בַּשָּׁמַיִם.", 
+                russian: "Солнце светит в небе.", 
+                id: "sun-shines-sky" 
+            }
+        ];
+
+        // נתונים של תרגילים
+        const exercisesData = [
+            {
+                type: "image",
+                image: "cat.jpg",
+                correctAnswer: "חתול"
+            },
+            {
+                type: "multipleChoice",
+                sentence: "הַחֲתוּל אוֹכֵל דָּג.",
+                question: "מה החתול אוכל?",
+                options: ["עוגה", "דג", "תפוח"],
+                correctIndex: 1
+            },
+            {
+                type: "image",
+                image: "house.jpg",
+                correctAnswer: "בית"
+            },
+            {
+                type: "multipleChoice",
+                sentence: "הַיַּלְדָּה שׁוֹתָה מַיִם.",
+                question: "מי שותה מים?",
+                options: ["ילד", "חתול", "ילדה"],
+                correctIndex: 2
+            },
+            {
+                type: "image",
+                image: "sun.jpg",
+                correctAnswer: "שמש"
+            }
+        ];
+
+        // הוספת אותיות לדף
+        const letterContainer = document.querySelector('.letter-container');
+        lettersData.forEach(letterData => {
+            const letterCard = document.createElement('div');
+            letterCard.className = 'letter-card';
+            letterCard.innerHTML = `
+                <div class="letter">${letterData.letter}</div>
+                <div class="letter-example">${letterData.example}</div>
+            `;
+            letterCard.onclick = () => playLetterSound(letterData.sound);
+            letterContainer.appendChild(letterCard);
+        });
+
+        // הוספת מילים לדף
+        const wordList = document.querySelector('.word-list');
+        wordsData.forEach(wordData => {
+            const wordCard = document.createElement('div');
+            wordCard.className = 'word-card';
+            wordCard.innerHTML = `
+                <img src="images/${wordData.image}" alt="${wordData.hebrew}" class="word-image">
+                <div class="word-details">
+                    <button class="sound-button" onclick="playWordSound('${wordData.id}')">🔊</button>
+                    <div class="hebrew-word">${wordData.hebrew}</div>
+                    <div class="russian-translation">${wordData.russian}</div>
+                </div>
+            `;
+            wordList.appendChild(wordCard);
+        });
+
+        // הוספת משפטים לדף
+        const sentencesList = document.querySelector('.sentences-list');
+        sentencesData.forEach(sentenceData => {
+            const sentenceCard = document.createElement('div');
+            sentenceCard.className = 'word-card';
+            sentenceCard.innerHTML = `
+                <div class="word-details">
+                    <button class="sound-button" onclick="playSentenceSound('${sentenceData.id}')">🔊</button>
+                    <div class="hebrew-word">${sentenceData.hebrew}</div>
+                    <div class="russian-translation">${sentenceData.russian}</div>
+                </div>
+            `;
+            sentencesList.appendChild(sentenceCard);
+        });
+
+        // פונקציות JavaScript
+        function openTab(tabName) {
+            // מסתיר את כל התוכן
+            const tabContents = document.getElementsByClassName('tab-content');
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove('active');
+            }
+            
+            // מסיר את המחלקה 'active' מכל הלשוניות
+            const tabs = document.getElementsByClassName('tab');
+            for (let i = 0; i < tabs.length; i++) {
+                tabs[i].classList.remove('active');
+            }
+            
+            // מציג את התוכן הנבחר ומוסיף את המחלקה 'active' ללשונית המתאימה
+            document.getElementById(tabName).classList.add('active');
+            
+            // מוצא את הלשונית הנכונה ומוסיף לה את המחלקה 'active'
+            const currentTab = Array.from(tabs).find(tab => tab.textContent.includes(getTabName(tabName)));
+            if (currentTab) {
+                currentTab.classList.add('active');
+            }
+        }
+        
+        function getTabName(tabId) {
+            switch(tabId) {
+                case 'alphabet': return 'אותיות';
+                case 'words': return 'מילים';
+                case 'sentences': return 'משפטים';
+                case 'exercises': return 'תרגול';
+                default: return '';
+            }
+        }
+        
+        function playLetterSound(letter) {
+            // בעתיד כאן תהיה פונקציה להשמעת הצליל של האות
+            console.log(`השמעת צליל של האות: ${letter}`);
+            alert(`צליל של האות: ${letter}`);
+        }
+        
+        function playWordSound(wordId) {
+            // בעתיד כאן תהיה פונקציה להשמעת המילה
+            console.log(`השמעת המילה: ${wordId}`);
+            alert(`השמעת המילה: ${wordId}`);
+        }
+        
+        function playSentenceSound(sentenceId) {
+            // בעתיד כאן תהיה פונקציה להשמעת המשפט
+            console.log(`השמעת המשפט: ${sentenceId}`);
+            alert(`השמעת המשפט: ${sentenceId}`);
+        }
+        
+        // תרגילים
+        let currentExercise = 1;
+        let totalExercises = exercisesData.length;
+        let score = 0;
+        
+        // עדכון סרגל התקדמות
+        function updateProgress() {
+            const progressBar = document.getElementById('progress-bar');
+            const progressText = document.getElementById('progress-text');
+            
+            const percentage = ((currentExercise - 1) / totalExercises) * 100;
+            progressBar.style.width = `${percentage}%`;
+            progressText.textContent = `שאלה ${currentExercise} מתוך ${totalExercises}`;
+        }
+        
+        // מעבר לתרגיל הבא
+        function nextExercise() {
+            document.getElementById(`exercise-${currentExercise}`).style.display = 'none';
+            currentExercise++;
+            
+            if (currentExercise <= totalExercises) {
+                document.getElementById(`exercise-${currentExercise}`).style.display = 'block';
+                updateProgress();
+            } else {
+                // סיום התרגילים
+                showFinalScore();
+            }
+        }
+        
+        // הצגת ציון סופי
+        function showFinalScore() {
+            const exerciseContainer = document.querySelector('.exercise-container');
+            exerciseContainer.innerHTML = `
+                <div class="final-score">
+                    <h2>כל הכבוד!</h2>
+                    <p>סיימתם את התרגול.</p>
+                    <p>הציון שלכם: ${score} מתוך ${totalExercises}</p>
+                    <button class="check-button" onclick="resetExercises()">התחל מחדש</button>
+                </div>
+            `;
+            
+            // עדכון סרגל התקדמות ל-100%
+            const progressBar = document.getElementById('progress-bar');
+            progressBar.style.width = '100%';
+            
+            const progressText = document.getElementById('progress-text');
+            progressText.textContent = `הציון: ${score} מתוך ${totalExercises}`;
+        }
+        
+        // איפוס התרגילים
+        function resetExercises() {
+            currentExercise = 1;
+            score = 0;
+            
+            // איפוס תצוגת התרגילים
+            for (let i = 1; i <= totalExercises; i++) {
+                const exerciseElement = document.getElementById(`exercise-${i}`);
+                if (exerciseElement) {
+                    exerciseElement.style.display = i === 1 ? 'block' : 'none';
+                }
+                
+                const feedbackElement = document.getElementById(`feedback-${i}`);
+                if (feedbackElement) {
+                    feedbackElement.textContent = '';
+                    feedbackElement.className = 'feedback';
+                }
+                
+                const inputElement = document.getElementById(`answer-input-${i}`);
+                if (inputElement) {
+                    inputElement.value = '';
+                }
+                
+                // איפוס אפשרויות בשאלות רב-ברירה
+                const optionsContainer = document.getElementById(`options-${i}`);
+                if (optionsContainer) {
+                    const options = optionsContainer.getElementsByClassName('option');
+                    for (let j = 0; j < options.length; j++) {
+                        options[j].classList.remove('selected');
+                    }
+                }
+            }
+            
+            // יצירה מחדש של תצוגת התרגילים
+            const exerciseContainer = document.querySelector('.exercise-container');
+            exerciseContainer.innerHTML = '';
+            
+            // הוספת התרגילים מחדש
+            exercisesData.forEach((exercise, index) => {
+                const exerciseNumber = index + 1;
+                const exerciseElement = document.createElement('div');
+                exerciseElement.id = `exercise-${exerciseNumber}`;
+                exerciseElement.className = 'exercise';
+                exerciseElement.style.display = exerciseNumber === 1 ? 'block' : 'none';
+                
+                if (exercise.type === 'image') {
+                    exerciseElement.innerHTML = `
+                        <div class="image-question">
+                            <h3>מה בתמונה?</h3>
+                            <img src="images/${exercise.image}" alt="תמונה לתרגול" id="question-image-${exerciseNumber}">
+                            <div>
+                                <input type="text" id="answer-input-${exerciseNumber}" placeholder="הקלידו את התשובה">
+                                <button class="check-button" onclick="checkImageAnswer(${exerciseNumber})">בדיקה</button>
+                            </div>
+                            <div id="feedback-${exerciseNumber}" class="feedback"></div>
+                        </div>
+                    `;
+                } else if (exercise.type === 'multipleChoice') {
+                    exerciseElement.innerHTML = `
+                        <div class="multiple-choice">
+                            <h3>קראו את המשפט וענו על השאלה:</h3>
+                            <p id="question-sentence-${exerciseNumber}" class="question-text">${exercise.sentence}</p>
+                            <p id="question-text-${exerciseNumber}" class="question-text">${exercise.question}</p>
+                            <div id="options-${exerciseNumber}" class="options">
+                                ${exercise.options.map((option, optionIndex) => 
+                                    `<div class="option" onclick="selectOption(this, ${exerciseNumber}, ${optionIndex})">${option}</div>`
+                                ).join('')}
+                            </div>
+                            <button class="check-button" onclick="checkMultipleChoice(${exerciseNumber})">בדיקה</button>
+                            <div id="feedback-${exerciseNumber}" class="feedback"></div>
+                        </div>
+                    `;
+                }
+                
+                exerciseContainer.appendChild(exerciseElement);
+            });
+            
+            updateProgress();
+        }
+        
+        // בדיקת תשובה לשאלת תמונה
+        function checkImageAnswer(exerciseNumber) {
+            const exercise = exercisesData[exerciseNumber - 1];
+            const userAnswer = document.getElementById(`answer-input-${exerciseNumber}`).value.trim();
+            const feedback = document.getElementById(`feedback-${exerciseNumber}`);
+            
+            // בדיקת התשובה (מתעלם מניקוד ואותיות גדולות/קטנות)
+            const cleanUserAnswer = userAnswer.replace(/[ְֱֲֳִֵֶַָֹֻּׁׂ]/g, '');
+            const cleanCorrectAnswer = exercise.correctAnswer.replace(/[ְֱֲֳִֵֶַָֹֻּׁׂ]/g, '');
+            
+            if (cleanUserAnswer === cleanCorrectAnswer) {
+                feedback.textContent = "נכון מאוד!";
+                feedback.className = "feedback correct";
+                score++;
+                
+                // מעבר אוטומטי לשאלה הבאה אחרי 2 שניות
+                setTimeout(nextExercise, 2000);
+            } else {
+                feedback.textContent = "לא נכון. נסו שוב!";
+                feedback.className = "feedback incorrect";
+            }
+        }
+        
+        // בחירת אפשרות בשאלת רב-ברירה
+        let selectedOptions = {};
+        
+        function selectOption(element, exerciseNumber, optionIndex) {
+            // מסיר את הבחירה מכל האפשרויות
+            const optionsContainer = document.getElementById(`options-${exerciseNumber}`);
+            const options = optionsContainer.getElementsByClassName('option');
+            for (let i = 0; i < options.length; i++) {
+                options[i].classList.remove('selected');
+            }
+            
+            // מוסיף את המחלקה 'selected' לאפשרות שנבחרה
+            element.classList.add('selected');
+            selectedOptions[exerciseNumber] = optionIndex;
+        }
+        
+        // בדיקת תשובה לשאלת רב-ברירה
+        function checkMultipleChoice(exerciseNumber) {
+            const exercise = exercisesData[exerciseNumber - 1];
+            const selectedOption = selectedOptions[exerciseNumber];
+            const feedback = document.getElementById(`feedback-${exerciseNumber}`);
+            
+            if (selectedOption === undefined) {
+                feedback.textContent = "אנא בחרו תשובה";
+                feedback.className = "feedback";
+                return;
+            }
+            
+            if (selectedOption === exercise.correctIndex) {
+                feedback.textContent = "נכון מאוד!";
+                feedback.className = "feedback correct";
+                score++;
+                
+                // מעבר אוטומטי לשאלה הבאה אחרי 2 שניות
+                setTimeout(nextExercise, 2000);
+            } else {
+                feedback.textContent = "לא נכון. נסו שוב!";
+                feedback.className = "feedback incorrect";
+            }
+        }
+        
+        // אתחול התרגילים
+        updateProgress();
+    </script>
+</body>
+</html>
