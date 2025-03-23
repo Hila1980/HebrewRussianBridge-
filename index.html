@@ -202,7 +202,7 @@
                 <div class="letter-card" onclick="playSound('alef')">
                     <div class="letter">א</div>
                     <div class="letter-example">אָב (אבא)</div>
-                    <img src="https://github.com/Hila1980/HebrewRussianBridge/raw/main/images/alef.png" class="image-example" alt="אבא">
+                    <img src="images/alef.png" class="image-example" alt="אבא">
                     <button class="sound-button">השמע</button>
                 </div>
                 <div class="letter-card" onclick="playSound('bet')">
@@ -340,7 +340,7 @@
             
             <div class="words-grid">
                 <div class="word-card" onclick="playSound('word-house')">
-                    <img src="https://github.com/Hila1980/HebrewRussianBridge/raw/main/images/house.png" class="word-image" alt="בית">
+                    <img src="images/house.png" class="word-image" alt="בית">
                     <div class="hebrew-word">בַּיִת</div>
                     <div class="translation">House</div>
                     <button class="sound-button">השמע</button>
@@ -384,7 +384,7 @@
             
             <div class="sentences-grid">
                 <div class="sentence-card" onclick="playSound('sentence-hello')">
-                    <img src="https://github.com/Hila1980/HebrewRussianBridge/raw/main/images/hello.png" class="sentence-image" alt="שלום">
+                    <img src="images/hello.png" class="sentence-image" alt="שלום">
                     <div class="hebrew-sentence">שָׁלוֹם</div>
                     <div class="translation">Hello</div>
                     <button class="sound-button">השמע</button>
@@ -444,58 +444,86 @@
 
         // פונקציה להשמעת קול
         function playSound(soundId) {
-            // נשתמש באובייקט Audio כדי להשמיע את הקול
-            // מיפוי של מזהי הקול לקבצי שמע - נתיבים מלאים מ-GitHub
-            const soundUrls = {
-                'alef': 'https://github.com/Hila1980/HebrewRussianBridge/raw/main/sounds/alef.mp3',
-                'bet': 'https://github.com/Hila1980/HebrewRussianBridge/raw/main/sounds/bet.mp3',
-                'gimel': 'https://github.com/Hila1980/HebrewRussianBridge/raw/main/sounds/gimel.mp3',
-                'dalet': 'https://github.com/Hila1980/HebrewRussianBridge/raw/main/sounds/dalet.mp3',
-                'hey': 'https://github.com/Hila1980/HebrewRussianBridge/raw/main/sounds/hey.mp3',
-                'vav': 'https://github.com/Hila1980/HebrewRussianBridge/raw/main/sounds/vav.mp3',
-                'zayin': 'https://github.com/Hila1980/HebrewRussianBridge/raw/main/sounds/zayin.mp3',
-                'het': 'https://github.com/Hila1980/HebrewRussianBridge/raw/main/sounds/het.mp3',
-                'tet': 'https://github.com/Hila1980/HebrewRussianBridge/raw/main/sounds/tet.mp3',
-                'yod': 'https://github.com/Hila1980/HebrewRussianBridge/raw/main/sounds/yod.mp3',
-                'kaf': 'https://github.com/Hila1980/HebrewRussianBridge/raw/main/sounds/kaf.mp3',
-                'lamed': 'https://github.com/Hila1980/HebrewRussianBridge/raw/main/sounds/lamed.mp3',
-                'mem': 'https://github.com/Hila1980/HebrewRussianBridge/raw/main/sounds/mem.mp3',
-                'nun': 'https://github.com/Hila1980/HebrewRussianBridge/raw/main/sounds/nun.mp3',
-                'samekh': 'https://github.com/Hila1980/HebrewRussianBridge/raw/main/sounds/samekh.mp3',
-                'ayin': 'https://github.com/Hila1980/HebrewRussianBridge/raw/main/sounds/ayin.mp3',
-                'pe': 'https://github.com/Hila1980/HebrewRussianBridge/raw/main/sounds/pe.mp3',
-                'tsadi': 'https://github.com/Hila1980/HebrewRussianBridge/raw/main/sounds/tsadi.mp3',
-                'qof': 'https://github.com/Hila1980/HebrewRussianBridge/raw/main/sounds/qof.mp3',
-                'resh': 'https://github.com/Hila1980/HebrewRussianBridge/raw/main/sounds/resh.mp3',
-                'shin': 'https://github.com/Hila1980/HebrewRussianBridge/raw/main/sounds/shin.mp3',
-                'tav': 'https://github.com/Hila1980/HebrewRussianBridge/raw/main/sounds/tav.mp3',
-                'word-house': 'https://github.com/Hila1980/HebrewRussianBridge/raw/main/sounds/house.mp3',
-                'word-water': 'https://github.com/Hila1980/HebrewRussianBridge/raw/main/sounds/water.mp3',
-                'word-bread': 'https://github.com/Hila1980/HebrewRussianBridge/raw/main/sounds/bread.mp3',
-                'word-book': 'https://github.com/Hila1980/HebrewRussianBridge/raw/main/sounds/book.mp3',
-                'word-school': 'https://github.com/Hila1980/HebrewRussianBridge/raw/main/sounds/school.mp3',
-                'word-friend': 'https://github.com/Hila1980/HebrewRussianBridge/raw/main/sounds/friend.mp3',
-                'sentence-hello': 'https://github.com/Hila1980/HebrewRussianBridge/raw/main/sounds/hello.mp3',
-                'sentence-how-are-you': 'https://github.com/Hila1980/HebrewRussianBridge/raw/main/sounds/how-are-you-m.mp3',
-                'sentence-how-are-you-f': 'https://github.com/Hila1980/HebrewRussianBridge/raw/main/sounds/how-are-you-f.mp3',
-                'sentence-thanks': 'https://github.com/Hila1980/HebrewRussianBridge/raw/main/sounds/thanks.mp3'
+            // קביעת הנתיב הבסיסי לקבצי האודיו (השתמש בבסיס האתר הנוכחי)
+            const basePath = window.location.origin + '/HebrewRussianBridge'; // או שם התיקייה שלך בדיוק
+            
+            // מיפוי של מזהי הקול לשמות קבצים
+            const soundFiles = {
+                'alef': 'alef.mp3',
+                'bet': 'bet.mp3',
+                'gimel': 'gimel.mp3',
+                'dalet': 'dalet.mp3',
+                'hey': 'hey.mp3',
+                'vav': 'vav.mp3',
+                'zayin': 'zayin.mp3',
+                'het': 'het.mp3',
+                'tet': 'tet.mp3',
+                'yod': 'yod.mp3',
+                'kaf': 'kaf.mp3',
+                'lamed': 'lamed.mp3',
+                'mem': 'mem.mp3',
+                'nun': 'nun.mp3',
+                'samekh': 'samekh.mp3',
+                'ayin': 'ayin.mp3',
+                'pe': 'pe.mp3',
+                'tsadi': 'tsadi.mp3',
+                'qof': 'qof.mp3',
+                'resh': 'resh.mp3',
+                'shin': 'shin.mp3',
+                'tav': 'tav.mp3',
+                'word-house': 'house.mp3',
+                'word-water': 'water.mp3',
+                'word-bread': 'bread.mp3',
+                'word-book': 'book.mp3',
+                'word-school': 'school.mp3',
+                'word-friend': 'friend.mp3',
+                'sentence-hello': 'hello.mp3',
+                'sentence-how-are-you': 'how-are-you-m.mp3',
+                'sentence-how-are-you-f': 'how-are-you-f.mp3',
+                'sentence-thanks': 'thanks.mp3'
             };
             
-            // בחירת כתובת URL של קובץ השמע
-            const audioUrl = soundUrls[soundId];
-            
-            if (!audioUrl) {
+            const soundFile = soundFiles[soundId];
+            if (!soundFile) {
                 console.error(`קובץ שמע לא נמצא עבור: ${soundId}`);
                 return;
             }
             
-            // יצירת אובייקט שמע חדש
+            // בניית הנתיב המלא לקובץ השמע
+            const audioUrl = `${basePath}/sounds/${soundFile}`;
+            
+            // יצירת אלמנט אודיו חדש
             const audio = new Audio(audioUrl);
+            
+            // אירוע שגיאה - מופעל אם יש בעיה בטעינת הקובץ
+            audio.onerror = function(e) {
+                console.error('שגיאה בטעינת קובץ שמע:', e);
+                console.log('ניסיון לטעון:', audioUrl);
+                
+                // אם יש שגיאה, בדוק אם נתיב ה-URL אולי שונה
+                if (basePath.includes('github.io')) {
+                    // נסה נתיב חלופי
+                    const alternativeUrl = `${window.location.origin}/sounds/${soundFile}`;
+                    console.log('מנסה נתיב חלופי:', alternativeUrl);
+                    
+                    const alternativeAudio = new Audio(alternativeUrl);
+                    alternativeAudio.onerror = function() {
+                        alert(`לא ניתן להשמיע את הקול כרגע. הנתיב לקובץ האודיו לא נמצא.`);
+                    };
+                    
+                    alternativeAudio.play().catch(error => {
+                        console.error('שגיאה בניסיון החלופי:', error);
+                        alert(`שגיאה בהשמעת קול. נתיב הקובץ אינו נגיש.`);
+                    });
+                } else {
+                    alert(`לא ניתן להשמיע את הקול כרגע. בדוק את הנתיב לקבצי האודיו.`);
+                }
+            };
             
             // ניגון הקובץ עם טיפול בשגיאות
             audio.play().catch(error => {
                 console.error('שגיאה בהשמעת קובץ שמע:', error);
-                alert(`שגיאה בניגון הקול. נסה/י שוב מאוחר יותר.`);
+                // שגיאות טיפול כבר מטופלות באירוע onerror למעלה
             });
             
             // עדכון ויזואלי - הדגשת הכרטיס שנלחץ
