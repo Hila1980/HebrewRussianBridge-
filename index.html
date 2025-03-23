@@ -202,7 +202,7 @@
                 <div class="letter-card" onclick="playSound('alef')">
                     <div class="letter">א</div>
                     <div class="letter-example">אָב (אבא)</div>
-                    <img src="images/alef.png" class="image-example" alt="אבא">
+                    <img src="https://github.com/user-attachments/assets/699b71f3-885f-4162-98d6-fe2d6d794abc" class="image-example" alt="אבא">
                     <button class="sound-button">השמע</button>
                 </div>
                 <div class="letter-card" onclick="playSound('bet')">
@@ -340,7 +340,7 @@
             
             <div class="words-grid">
                 <div class="word-card" onclick="playSound('word-house')">
-                    <img src="images/house.png" class="word-image" alt="בית">
+                    <img src="https://github.com/user-attachments/assets/a77bb6c8-3ef8-4e12-a9ce-2bd7c6cc1b89" class="word-image" alt="בית">
                     <div class="hebrew-word">בַּיִת</div>
                     <div class="translation">House</div>
                     <button class="sound-button">השמע</button>
@@ -384,7 +384,7 @@
             
             <div class="sentences-grid">
                 <div class="sentence-card" onclick="playSound('sentence-hello')">
-                    <img src="images/hello.png" class="sentence-image" alt="שלום">
+                    <img src="https://github.com/user-attachments/assets/1d020122-ae34-4152-9513-e8cf68cbe973" class="sentence-image" alt="שלום">
                     <div class="hebrew-sentence">שָׁלוֹם</div>
                     <div class="translation">Hello</div>
                     <button class="sound-button">השמע</button>
@@ -444,8 +444,18 @@
 
         // פונקציה להשמעת קול באמצעות Web Speech API
         function playSound(soundId) {
+            // הדגשת הכרטיס 
+            const cardElement = document.querySelector(`[onclick="playSound('${soundId}')"]`);
+            if (cardElement) {
+                cardElement.classList.add('active-sound');
+                setTimeout(() => {
+                    cardElement.classList.remove('active-sound');
+                }, 1000);
+            }
+            
             // אם Web Speech API לא זמין
             if (!('speechSynthesis' in window)) {
+                console.error("הדפדפן שלך אינו תומך בהקראה.");
                 alert("הדפדפן שלך אינו תומך בהקראה.");
                 return;
             }
@@ -453,85 +463,73 @@
             // מיפוי זיהוי לטקסט שיוקרא
             const textMap = {
                 // אותיות
-                'alef': 'אלף',
-                'bet': 'בית',
-                'gimel': 'גימל',
-                'dalet': 'דלת',
-                'hey': 'הא',
-                'vav': 'וו',
-                'zayin': 'זיין',
-                'het': 'חית',
-                'tet': 'טית',
-                'yod': 'יוד',
-                'kaf': 'כף',
-                'lamed': 'למד',
-                'mem': 'מם',
-                'nun': 'נון',
-                'samekh': 'סמך',
-                'ayin': 'עין',
-                'pe': 'פה',
-                'tsadi': 'צדי',
-                'qof': 'קוף',
-                'resh': 'ריש',
-                'shin': 'שין',
-                'tav': 'תו',
+                'alef': 'אָלֶף',
+                'bet': 'בֵּית',
+                'gimel': 'גִימֶל',
+                'dalet': 'דָּלֶת',
+                'hey': 'הֵא',
+                'vav': 'וָו',
+                'zayin': 'זַיִן',
+                'het': 'חֵית',
+                'tet': 'טֵית',
+                'yod': 'יוֹד',
+                'kaf': 'כַּף',
+                'lamed': 'לָמֶד',
+                'mem': 'מֵם',
+                'nun': 'נוּן',
+                'samekh': 'סָמֶךְ',
+                'ayin': 'עַיִן',
+                'pe': 'פֵּה',
+                'tsadi': 'צָדִי',
+                'qof': 'קוֹף',
+                'resh': 'רֵישׁ',
+                'shin': 'שִׁין',
+                'tav': 'תָּו',
                 // מילים
-                'word-house': 'בית',
-                'word-water': 'מים',
-                'word-bread': 'לחם',
-                'word-book': 'ספר',
-                'word-school': 'בית ספר',
-                'word-friend': 'חבר',
+                'word-house': 'בַּיִת',
+                'word-water': 'מַיִם',
+                'word-bread': 'לֶחֶם',
+                'word-book': 'סֵפֶר',
+                'word-school': 'בֵּית סֵפֶר',
+                'word-friend': 'חָבֵר',
                 // משפטים
-                'sentence-hello': 'שלום',
-                'sentence-how-are-you': 'מה שלומך?',
-                'sentence-how-are-you-f': 'מה שלומך?',
-                'sentence-thanks': 'תודה'
+                'sentence-hello': 'שָׁלוֹם',
+                'sentence-how-are-you': 'מַה שְׁלוֹמְךָ?',
+                'sentence-how-are-you-f': 'מַה שְׁלוֹמֵךְ?',
+                'sentence-thanks': 'תּוֹדָה'
             };
             
             // הטקסט להקראה
             const textToSpeak = textMap[soundId] || soundId;
             
-            // יצירת אובייקט הקראה חדש
-            const utterance = new SpeechSynthesisUtterance(textToSpeak);
-            
-            // הגדרת שפה לעברית
-            utterance.lang = 'he-IL';
-            
-            // אירועים להצגת סטטוס ההקראה
-            utterance.onstart = function() {
-                console.log('התחלת הקראה:', textToSpeak);
-                // עדכון ויזואלי - הדגשת הכרטיס שנלחץ
-                const cardElement = document.querySelector(`[onclick="playSound('${soundId}')"]`);
-                if (cardElement) {
-                    cardElement.classList.add('active-sound');
-                }
-            };
-            
-            utterance.onend = function() {
-                console.log('סיום הקראה:', textToSpeak);
-                // עדכון ויזואלי - הסרת הדגשה
-                const cardElement = document.querySelector(`[onclick="playSound('${soundId}')"]`);
-                if (cardElement) {
-                    setTimeout(() => {
-                        cardElement.classList.remove('active-sound');
-                    }, 200);
-                }
-            };
-            
-            utterance.onerror = function(event) {
-                console.error('שגיאה בהקראה:', event);
-                alert('שגיאה בהקראה. נסה שוב מאוחר יותר.');
+            try {
+                // יצירת אובייקט הקראה חדש
+                const utterance = new SpeechSynthesisUtterance(textToSpeak);
                 
-                // עדכון ויזואלי - הסרת הדגשה במקרה של שגיאה
-                const cardElement = document.querySelector(`[onclick="playSound('${soundId}')"]`);
-                if (cardElement) {
-                    cardElement.classList.remove('active-sound');
+                // בדיקה אם קיימים קולות בעברית
+                const voices = window.speechSynthesis.getVoices();
+                const hebrewVoice = voices.find(voice => voice.lang.includes('he') || voice.lang.includes('iw'));
+                
+                // הגדרת שפה לעברית
+                utterance.lang = 'he-IL';
+                
+                // אם נמצא קול עברי, השתמש בו
+                if (hebrewVoice) {
+                    utterance.voice = hebrewVoice;
                 }
-            };
-            
-            // הפעלת ההקראה
-            window.speechSynthesis.speak(utterance);
+                
+                // הגדרת מהירות ועוצמה
+                utterance.rate = 0.9; // קצת יותר איטי מהרגיל
+                utterance.volume = 1.0; // עוצמת קול מרבית
+                
+                // הפעלת ההקראה
+                window.speechSynthesis.speak(utterance);
+                
+                console.log('הקראה של:', textToSpeak);
+            } catch (error) {
+                console.error('שגיאה בהקראה:', error);
+                alert('שגיאה בהקראה. נא לנסות שוב מאוחר יותר.');
+            }
         }
 
         // פונקציה לפתיחת תרגיל
