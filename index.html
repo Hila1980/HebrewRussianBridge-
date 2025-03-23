@@ -97,6 +97,13 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
         
+        .active-sound {
+            background-color: #f0f8ff;
+            box-shadow: 0 0 8px rgba(74, 109, 167, 0.6) !important;
+            transform: scale(1.05);
+            transition: all 0.3s ease;
+        }
+        
         .letter {
             font-size: 40px;
             font-weight: bold;
@@ -195,7 +202,7 @@
                 <div class="letter-card" onclick="playSound('alef')">
                     <div class="letter">א</div>
                     <div class="letter-example">אָב (אבא)</div>
-                    <img src="/api/placeholder/30/30" class="image-example" alt="אבא">
+                    <img src="images/alef.png" class="image-example" alt="אבא">
                     <button class="sound-button">השמע</button>
                 </div>
                 <div class="letter-card" onclick="playSound('bet')">
@@ -333,7 +340,7 @@
             
             <div class="words-grid">
                 <div class="word-card" onclick="playSound('word-house')">
-                    <img src="/api/placeholder/60/60" class="word-image" alt="בית">
+                    <img src="images/house.png" class="word-image" alt="בית">
                     <div class="hebrew-word">בַּיִת</div>
                     <div class="translation">House</div>
                     <button class="sound-button">השמע</button>
@@ -377,7 +384,7 @@
             
             <div class="sentences-grid">
                 <div class="sentence-card" onclick="playSound('sentence-hello')">
-                    <img src="/api/placeholder/60/60" class="sentence-image" alt="שלום">
+                    <img src="images/hello.png" class="sentence-image" alt="שלום">
                     <div class="hebrew-sentence">שָׁלוֹם</div>
                     <div class="translation">Hello</div>
                     <button class="sound-button">השמע</button>
@@ -466,26 +473,33 @@
 
         // פונקציה להשמעת קול
         function playSound(soundId) {
-            // כאן נשתמש באובייקט Audio בכדי להשמיע את הקול
-            // במציאות, נצטרך להחליף את ה-URL ב-URL אמיתי של קובץ השמע
+            // נשתמש באובייקט Audio כדי להשמיע את הקול
             const soundFile = sounds[soundId] || '';
             const audioUrl = `sounds/${soundFile}`; // התיקייה בה הקבצים נמצאים
             
             // יצירת אובייקט שמע חדש
             const audio = new Audio(audioUrl);
             
-            // בדיקה אם הקובץ קיים (פשוט להדגמה)
+            // תוספת שמונעת שגיאות שמע מרובות
             audio.onerror = function() {
-                // אם יש שגיאה בטעינת הקובץ, הצג שם האות/מילה כטקסט
-                alert(`השמע (${soundId}): לא ניתן לטעון את קובץ השמע.`);
+                console.error(`בעיה בטעינת קובץ השמע: ${audioUrl}`);
+                // ניתן להוסיף כאן הודעת גיבוי אם רוצים
             };
             
-            // ניגון הקובץ
+            // ניגון הקובץ עם טיפול בשגיאות
             audio.play().catch(error => {
-                // במקרה של שגיאה במהלך הניגון
-                console.error('Error playing sound:', error);
-                alert(`שגיאה בהשמעת הקול: ${soundId}`);
+                console.error('שגיאה בהשמעת קובץ שמע:', error);
+                // ניתן להוסיף כאן פתרון גיבוי אם יש צורך
             });
+            
+            // עדכון ויזואלי - הדגשת הכרטיס שנלחץ
+            const cardElement = document.querySelector(`[onclick="playSound('${soundId}')"]`);
+            if (cardElement) {
+                cardElement.classList.add('active-sound');
+                setTimeout(() => {
+                    cardElement.classList.remove('active-sound');
+                }, 1000);
+            }
         }
 
         // פונקציה לפתיחת תרגיל
