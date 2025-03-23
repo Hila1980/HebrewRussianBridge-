@@ -442,98 +442,96 @@
         //    ...
         // };
 
-        // פונקציה להשמעת קול
+        // פונקציה להשמעת קול באמצעות Web Speech API
         function playSound(soundId) {
-            // קביעת הנתיב הבסיסי לקבצי האודיו (השתמש בבסיס האתר הנוכחי)
-            const basePath = window.location.origin + '/HebrewRussianBridge'; // או שם התיקייה שלך בדיוק
-            
-            // מיפוי של מזהי הקול לשמות קבצים
-            const soundFiles = {
-                'alef': 'alef.mp3',
-                'bet': 'bet.mp3',
-                'gimel': 'gimel.mp3',
-                'dalet': 'dalet.mp3',
-                'hey': 'hey.mp3',
-                'vav': 'vav.mp3',
-                'zayin': 'zayin.mp3',
-                'het': 'het.mp3',
-                'tet': 'tet.mp3',
-                'yod': 'yod.mp3',
-                'kaf': 'kaf.mp3',
-                'lamed': 'lamed.mp3',
-                'mem': 'mem.mp3',
-                'nun': 'nun.mp3',
-                'samekh': 'samekh.mp3',
-                'ayin': 'ayin.mp3',
-                'pe': 'pe.mp3',
-                'tsadi': 'tsadi.mp3',
-                'qof': 'qof.mp3',
-                'resh': 'resh.mp3',
-                'shin': 'shin.mp3',
-                'tav': 'tav.mp3',
-                'word-house': 'house.mp3',
-                'word-water': 'water.mp3',
-                'word-bread': 'bread.mp3',
-                'word-book': 'book.mp3',
-                'word-school': 'school.mp3',
-                'word-friend': 'friend.mp3',
-                'sentence-hello': 'hello.mp3',
-                'sentence-how-are-you': 'how-are-you-m.mp3',
-                'sentence-how-are-you-f': 'how-are-you-f.mp3',
-                'sentence-thanks': 'thanks.mp3'
-            };
-            
-            const soundFile = soundFiles[soundId];
-            if (!soundFile) {
-                console.error(`קובץ שמע לא נמצא עבור: ${soundId}`);
+            // אם Web Speech API לא זמין
+            if (!('speechSynthesis' in window)) {
+                alert("הדפדפן שלך אינו תומך בהקראה.");
                 return;
             }
             
-            // בניית הנתיב המלא לקובץ השמע
-            const audioUrl = `${basePath}/sounds/${soundFile}`;
+            // מיפוי זיהוי לטקסט שיוקרא
+            const textMap = {
+                // אותיות
+                'alef': 'אלף',
+                'bet': 'בית',
+                'gimel': 'גימל',
+                'dalet': 'דלת',
+                'hey': 'הא',
+                'vav': 'וו',
+                'zayin': 'זיין',
+                'het': 'חית',
+                'tet': 'טית',
+                'yod': 'יוד',
+                'kaf': 'כף',
+                'lamed': 'למד',
+                'mem': 'מם',
+                'nun': 'נון',
+                'samekh': 'סמך',
+                'ayin': 'עין',
+                'pe': 'פה',
+                'tsadi': 'צדי',
+                'qof': 'קוף',
+                'resh': 'ריש',
+                'shin': 'שין',
+                'tav': 'תו',
+                // מילים
+                'word-house': 'בית',
+                'word-water': 'מים',
+                'word-bread': 'לחם',
+                'word-book': 'ספר',
+                'word-school': 'בית ספר',
+                'word-friend': 'חבר',
+                // משפטים
+                'sentence-hello': 'שלום',
+                'sentence-how-are-you': 'מה שלומך?',
+                'sentence-how-are-you-f': 'מה שלומך?',
+                'sentence-thanks': 'תודה'
+            };
             
-            // יצירת אלמנט אודיו חדש
-            const audio = new Audio(audioUrl);
+            // הטקסט להקראה
+            const textToSpeak = textMap[soundId] || soundId;
             
-            // אירוע שגיאה - מופעל אם יש בעיה בטעינת הקובץ
-            audio.onerror = function(e) {
-                console.error('שגיאה בטעינת קובץ שמע:', e);
-                console.log('ניסיון לטעון:', audioUrl);
-                
-                // אם יש שגיאה, בדוק אם נתיב ה-URL אולי שונה
-                if (basePath.includes('github.io')) {
-                    // נסה נתיב חלופי
-                    const alternativeUrl = `${window.location.origin}/sounds/${soundFile}`;
-                    console.log('מנסה נתיב חלופי:', alternativeUrl);
-                    
-                    const alternativeAudio = new Audio(alternativeUrl);
-                    alternativeAudio.onerror = function() {
-                        alert(`לא ניתן להשמיע את הקול כרגע. הנתיב לקובץ האודיו לא נמצא.`);
-                    };
-                    
-                    alternativeAudio.play().catch(error => {
-                        console.error('שגיאה בניסיון החלופי:', error);
-                        alert(`שגיאה בהשמעת קול. נתיב הקובץ אינו נגיש.`);
-                    });
-                } else {
-                    alert(`לא ניתן להשמיע את הקול כרגע. בדוק את הנתיב לקבצי האודיו.`);
+            // יצירת אובייקט הקראה חדש
+            const utterance = new SpeechSynthesisUtterance(textToSpeak);
+            
+            // הגדרת שפה לעברית
+            utterance.lang = 'he-IL';
+            
+            // אירועים להצגת סטטוס ההקראה
+            utterance.onstart = function() {
+                console.log('התחלת הקראה:', textToSpeak);
+                // עדכון ויזואלי - הדגשת הכרטיס שנלחץ
+                const cardElement = document.querySelector(`[onclick="playSound('${soundId}')"]`);
+                if (cardElement) {
+                    cardElement.classList.add('active-sound');
                 }
             };
             
-            // ניגון הקובץ עם טיפול בשגיאות
-            audio.play().catch(error => {
-                console.error('שגיאה בהשמעת קובץ שמע:', error);
-                // שגיאות טיפול כבר מטופלות באירוע onerror למעלה
-            });
+            utterance.onend = function() {
+                console.log('סיום הקראה:', textToSpeak);
+                // עדכון ויזואלי - הסרת הדגשה
+                const cardElement = document.querySelector(`[onclick="playSound('${soundId}')"]`);
+                if (cardElement) {
+                    setTimeout(() => {
+                        cardElement.classList.remove('active-sound');
+                    }, 200);
+                }
+            };
             
-            // עדכון ויזואלי - הדגשת הכרטיס שנלחץ
-            const cardElement = document.querySelector(`[onclick="playSound('${soundId}')"]`);
-            if (cardElement) {
-                cardElement.classList.add('active-sound');
-                setTimeout(() => {
+            utterance.onerror = function(event) {
+                console.error('שגיאה בהקראה:', event);
+                alert('שגיאה בהקראה. נסה שוב מאוחר יותר.');
+                
+                // עדכון ויזואלי - הסרת הדגשה במקרה של שגיאה
+                const cardElement = document.querySelector(`[onclick="playSound('${soundId}')"]`);
+                if (cardElement) {
                     cardElement.classList.remove('active-sound');
-                }, 1000);
-            }
+                }
+            };
+            
+            // הפעלת ההקראה
+            window.speechSynthesis.speak(utterance);
         }
 
         // פונקציה לפתיחת תרגיל
