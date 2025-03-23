@@ -1,4 +1,94 @@
-<!DOCTYPE html>
+<div class="letter-card" onclick="playSound('bet')">
+                    <div class="letter">ב</div>
+                    <div class="letter-example">בֵּית</div>
+                    <button class="sound-button">השמע</button>
+                </div>
+                <div class="letter-card" onclick="playSound('gimel')">
+                    <div class="letter">ג</div>
+                    <div class="letter-example">גִימֶל</div>
+                    <button class="sound-button">השמע</button>
+                </div>
+                <div class="letter-card" onclick="playSound('dalet')">
+                    <div class="letter">ד</div>
+                    <div class="letter-example">דָּלֶת</div>
+                    <button class="sound-button">השמע</button>
+                </div>
+                <div class="letter-card" onclick="playSound('hey')">
+                    <div class="letter">ה</div>
+                    <div class="letter-example">הֵא</div>
+                    <button class="sound-button">השמע</button>
+                </div>
+                <div class="letter-card" onclick="playSound('vav')">
+                    <div class="letter">ו</div>
+                    <div class="letter-example">וָו</div>
+                    <button class="sound-button">השמע</button>
+                </div>
+                <div class="letter-card" onclick="playSound('zayin')">
+                    <div class="letter">ז</div>
+                    <div class="letter-example">זַיִן</div>
+                    <button class="sound-button">השמע</button>
+                </div>
+                <div class="letter-card" onclick="playSound('het')">
+                    <div class="letter">ח</div>
+                    <div class="letter-example">חֵית</div>
+                    <button class="sound-button">השמע</button>
+                </div>
+                <div class="letter-card" onclick="playSound('tet')">
+                    <div class="letter">ט</div>
+                    <div class="letter-example">טֵית</div>
+                    <button class="sound-button">השמע</button>
+                </div>
+                <div class="letter-card" onclick="playSound('yod')">
+                    <div class="letter">י</div>
+                    <div class="letter-example">יוֹד</div>
+                    <button class="sound-button">השמע</button>
+                </div>
+                <div class="letter-card" onclick="playSound('kaf')">
+                    <div class="letter">כ</div>
+                    <div class="letter-example">כַּף</div>
+                    <button class="sound-button">השמע</button>
+                </div>
+                <div class="letter-card" onclick="playSound('lamed')">
+                    <div class="letter">ל</div>
+                    <div class="letter-example">לָמֶד</div>
+                    <button class="sound-button">השמע</button>
+                </div>
+                <div class="letter-card" onclick="playSound('mem')">
+                    <div class="letter">מ</div>
+                    <div class="letter-example">מֵם</div>
+                    <button class="sound-button">השמע</button>
+                </div>
+                <div class="letter-card" onclick="playSound('nun')">
+                    <div class="letter">נ</div>
+                    <div class="letter-example">נוּן</div>
+                    <button class="sound-button">השמע</button>
+                </div>
+                <div class="letter-card" onclick="playSound('samekh')">
+                    <div class="letter">ס</div>
+                    <div class="letter-example">סָמֶךְ</div>
+                    <button class="sound-button">השמע</button>
+                </div>
+                <div class="letter-card" onclick="playSound('ayin')">
+                    <div class="letter">ע</div>
+                    <div class="letter-example">עַיִן</div>
+                    <button class="sound-button">השמע</button>
+                </div>
+                <div class="letter-card" onclick="playSound('pe')">
+                    <div class="letter">פ</div>
+                    <div class="letter-example">פֵּה</div>
+                    <button class="sound-button">השמע</button>
+                </div>
+                <div class="letter-card" onclick="playSound('tsadi')">
+                    <div class="letter">צ</div>
+                    <div class="letter-example">צָדִי</div>
+                    <button class="sound-button">השמע</button>
+                </div>
+                <div class="letter-card" onclick="playSound('qof')">
+                    <div class="letter">ק</div>
+                    <div class="letter-example">קוֹף</div>
+                    <button class="sound-button">השמע</button>
+                </div>
+                <div class="letter-<!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -80,7 +170,7 @@
         
         .letter-card {
             width: 100px;
-            height: 140px;
+            height: 120px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -140,7 +230,7 @@
             transition: transform 0.2s, box-shadow 0.2s;
         }
         
-        .word-card:hover, .sentence-card:hover, .exercise-card:hover {
+        .word-card:hover, .sentence-card:hover, .exercise-card:hover, .letter-card:hover {
             transform: translateY(-3px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
@@ -201,8 +291,7 @@
             <div class="letter-container">
                 <div class="letter-card" onclick="playSound('alef')">
                     <div class="letter">א</div>
-                    <div class="letter-example">אָב (אבא)</div>
-                    <img src="https://github.com/user-attachments/assets/699b71f3-885f-4162-98d6-fe2d6d794abc" class="image-example" alt="אבא">
+                    <div class="letter-example">אָלֶף</div>
                     <button class="sound-button">השמע</button>
                 </div>
                 <div class="letter-card" onclick="playSound('bet')">
@@ -342,7 +431,7 @@
                 <div class="word-card" onclick="playSound('word-house')">
                     <img src="https://github.com/user-attachments/assets/a77bb6c8-3ef8-4e12-a9ce-2bd7c6cc1b89" class="word-image" alt="בית">
                     <div class="hebrew-word">בַּיִת</div>
-                    <div class="translation">House</div>
+                    <div class="translation">Дом</div>
                     <button class="sound-button">השמע</button>
                 </div>
                 <div class="word-card" onclick="playSound('word-water')">
@@ -486,12 +575,12 @@
                 'shin': 'שִׁין',
                 'tav': 'תָּו',
                 // מילים
+                'word-apple': 'תַּפּוּחַ',
+                'word-boy': 'יֶלֶד',
                 'word-house': 'בַּיִת',
-                'word-water': 'מַיִם',
-                'word-bread': 'לֶחֶם',
+                'word-chair': 'כִּיסֵּא',
+                'word-table': 'שֻׁלְחָן',
                 'word-book': 'סֵפֶר',
-                'word-school': 'בֵּית סֵפֶר',
-                'word-friend': 'חָבֵר',
                 // משפטים
                 'sentence-hello': 'שָׁלוֹם',
                 'sentence-how-are-you': 'מַה שְׁלוֹמְךָ?',
@@ -522,8 +611,20 @@
                 utterance.rate = 0.9; // קצת יותר איטי מהרגיל
                 utterance.volume = 1.0; // עוצמת קול מרבית
                 
-                // הפעלת ההקראה
-                window.speechSynthesis.speak(utterance);
+                // טיפול במצב שבו הקולות לא נטענו עדיין
+                if (voices.length === 0) {
+                    window.speechSynthesis.onvoiceschanged = function() {
+                        const updatedVoices = window.speechSynthesis.getVoices();
+                        const updatedHebrewVoice = updatedVoices.find(voice => voice.lang.includes('he') || voice.lang.includes('iw'));
+                        if (updatedHebrewVoice) {
+                            utterance.voice = updatedHebrewVoice;
+                        }
+                        window.speechSynthesis.speak(utterance);
+                    };
+                } else {
+                    // הפעלת ההקראה
+                    window.speechSynthesis.speak(utterance);
+                }
                 
                 console.log('הקראה של:', textToSpeak);
             } catch (error) {
